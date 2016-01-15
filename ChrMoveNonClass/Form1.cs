@@ -31,7 +31,7 @@ namespace WindowsFormsApplication1
         /** キャラクターY速度*/
         List<float> vys = new List<float>();
         /** 乱数*/
-        Random rand = new Random();
+        public static Random rand = new Random();
         /** 重力加速度*/
         const float GRAVITY = 5f;
         /** 加速度*/
@@ -48,6 +48,8 @@ namespace WindowsFormsApplication1
         private void timer1_Tick(object sender, EventArgs e)
         {
             float nx, ny;
+
+            CStraight.UpdateAll();
 
             for (int i = 0; i < labels.Count; i++)
             {
@@ -133,7 +135,7 @@ namespace WindowsFormsApplication1
         /** 直線移動キャラ生成*/
         private void button1_Click(object sender, EventArgs e)
         {
-            InstantiateChr(CHRTYPE.CHR_STRAIGHT);
+            CStraight.InstantiateChr();
         }
 
         /** 重力キャラ生成*/
