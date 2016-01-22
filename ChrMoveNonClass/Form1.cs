@@ -49,57 +49,13 @@ namespace WindowsFormsApplication1
         {
             float nx, ny;
 
-            CStraight.UpdateAll();
-
+            CChr.UpdateAll();
+            
             for (int i = 0; i < labels.Count; i++)
             {
                 // ラベルの種類を特定する
                 switch (types[i])
                 {
-                        // 等速運動
-                    case CHRTYPE.CHR_STRAIGHT:
-                        // X移動
-                        nx = posxs[i] + vxs[i];
-                        // 跳ね返り
-                        if ((nx < 0f) || (nx+labels[i].Width > ClientSize.Width))
-                        {
-                            vxs[i] = -vxs[i];
-                            nx = posxs[i] + vxs[i];
-                        }
-                        // Y移動
-                        ny = posys[i] + vys[i];
-                        // 跳ね返り
-                        if ((ny < 0f) || (ny+labels[i].Height > ClientSize.Height)) {
-                            vys[i] = -vys[i];
-                            ny = posys[i] + vys[i];
-                        }
-                        // 書き戻し
-                        posxs[i] = nx;
-                        posys[i] = ny;
-                        break;
-
-                        // 重力移動
-                    case CHRTYPE.CHR_GRAVITY:
-                        // X移動
-                        nx = posxs[i] + vxs[i];
-                        // 跳ね返り
-                        if ((nx < 0f) || (nx + labels[i].Width > ClientSize.Width))
-                        {
-                            vxs[i] = -vxs[i];
-                            nx = posxs[i] + vxs[i];
-                        }
-                        posxs[i] = nx;
-                        // Y移動
-                        vys[i] += GRAVITY;
-                        ny = posys[i] + vys[i];
-                        if (ny+labels[i].Height > ClientSize.Height)
-                        {
-                            // 速度反転
-                            vys[i] = -vys[i];
-                            ny = ClientSize.Height - labels[i].Height;
-                        }
-                        posys[i] = ny;
-                        break;
                         // 中心に加速
                     case CHRTYPE.CHR_ADD:
                         posxs[i] += vxs[i];
@@ -141,9 +97,7 @@ namespace WindowsFormsApplication1
         /** 重力キャラ生成*/
         private void button2_Click(object sender, EventArgs e)
         {
-            int idx = InstantiateChr(CHRTYPE.CHR_GRAVITY);
-            //Y速度は不要なので消す
-            vys[idx] = 0f;
+            CGravity.InstantiateChr();
         }
 
         /** 加速キャラ生成*/

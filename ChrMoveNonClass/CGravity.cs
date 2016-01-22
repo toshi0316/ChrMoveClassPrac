@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
-    class CStraight : CChr
+    class CGravity : CChr
     {
-        public CStraight() : base()
-        {
-            // タイプを設定
-            type = CHRTYPE.CHR_STRAIGHT;
+        /** 重力加速度*/
+        const float GRAVITY = 5f;
 
-            label.Text = "^○^";
+        /** コンストラクタ*/
+        public CGravity() : base()
+        {
+            type = CHRTYPE.CHR_GRAVITY;
+            label.Text = "-◆-";
+            vy = 0f;
         }
 
         protected override void Update()
@@ -27,26 +29,27 @@ namespace WindowsFormsApplication1
                 vx = -vx;
                 nx = posx + vx;
             }
-            // Y移動
-            ny = posy + vy;
-            // 跳ね返り
-            if ((ny < 0f) || (ny + label.Height > Form1.ActiveForm.ClientSize.Height))
-            {
-                vy = -vy;
-                ny = posy + vy;
-            }
-            // 書き戻し
             posx = nx;
+            // Y移動
+            vy += GRAVITY;
+            ny = posy + vy;
+            if (ny + label.Height > Form1.ActiveForm.ClientSize.Height)
+            {
+                // 速度反転
+                vy = -vy;
+                ny = Form1.ActiveForm.ClientSize.Height - label.Height;
+            }
             posy = ny;
 
             label.Left = (int)posx;
             label.Top = (int)posy;
+
         }
 
         /** キャラクターを生成*/
         public static void InstantiateChr()
         {
-            we.Add(new CStraight());
+            we.Add(new CGravity());
         }
     }
 }
